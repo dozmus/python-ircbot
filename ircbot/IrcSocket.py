@@ -16,11 +16,11 @@ class IrcSocket(object):
         self.socket.close()
 
     def init(self, user):
-        if user.password is not None:
-            self.write_line('/NICKSERV IDENTITY {}'.format(user.password))  # TODO allow this to be set
+        if user['password'] is not None:
+            self.write_line('/NICKSERV IDENTITY {}'.format(user['password']))  # TODO allow this to be set
 
-        self.nick(user.nickname)
-        self.user(user.username, user.realname)
+        self.nick(user['nickname'])
+        self.user(user['username'], user['realname'])
 
     def nick(self, nickname):
         self.write_line('NICK {}'.format(nickname))

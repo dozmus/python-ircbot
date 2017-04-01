@@ -47,19 +47,10 @@ class Server(object):
         print('Closing connection...')
         socket.close()
 
-
-class User(object):
-    def __init__(self, nickname, username, realname):
-        self.nickname = nickname
-        self.username = username
-        self.realname = realname
-        self.password = None
-
-
 # Application entry-point
 if __name__ == "__main__":
     # Connect to server
-    user = User('PyBot3092', 'PyBot3092', 'A Python IRC bot.')
+    user = {'nickname': 'PyBot3092', 'username': 'PyBot3092', 'realname': 'A Python IRC bot.', 'password': None}
     server_details = {'hostname': 'irc.rizon.net', 'port': 6697, 'ssl': True}
     channels = {'#dictated.java': ''}
 
