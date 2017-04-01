@@ -39,13 +39,30 @@ class Server(object):
                 init_required = False
 
             for line in lines:
+                # Ping-Pong
                 if line.startswith('PING'):
                     socket.pong(line)
+                    continue
 
-                print('> %s' % line)
+                # Other
+                print(line)
 
         print('Closing connection...')
         socket.close()
+
+
+def parse(line):
+    line = line[1:] if line.startswith(':') else line
+    colon_idx = line.find(' :')
+
+    if colon_idx is not -1:
+        msg_info = line[:colon_idx].split(' ')
+        msg_data = line[colon_idx + 2:]
+    else:
+        msg_info = line.split(' ')
+        msg_data = ''
+
+    return {'server': msg_info[0], 'command': msg_info[1], 'target': msg_info[2], 'args': msg_info[3:], 'msg': msg_data}
 
 # Application entry-point
 if __name__ == "__main__":
