@@ -40,7 +40,7 @@ class Server(object):
 
             for line in lines:
                 if line.startswith('PING'):
-                    socket.write_line('PONG {}'.format(line[4:]))
+                    socket.pong(line)
 
                 print('> %s' % line)
 

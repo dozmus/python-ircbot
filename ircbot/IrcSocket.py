@@ -40,6 +40,10 @@ class IrcSocket(object):
     def privmsg(self, target, message):
         self.write_line('PRIVMSG {} :{}'.format(target, message))
 
+    def pong(self, line):
+        self.write_line('PONG {}'.format(line[4:]))
+        pass
+
     def write_line(self, line):
         # TODO check if socket is open?
         # TODO create a queued writer, to throttle output
