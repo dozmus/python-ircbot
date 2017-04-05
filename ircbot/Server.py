@@ -44,6 +44,16 @@ class Server(object):
                     socket.pong(line)
                     continue
 
+                # Parse message
+                msg = parse(line)
+
+                # On-connect
+                if msg['command'] == '001':
+                    print('Joining default channels')
+
+                    for channel, password in self.channels.items():
+                        socket.join_channel(channel, password)
+
                 # Other
                 print(line)
 

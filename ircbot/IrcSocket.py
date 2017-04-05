@@ -28,8 +28,11 @@ class IrcSocket(object):
     def user(self, username, realname, mode=8):
         self.write_line('USER {} {} * :{}'.format(username, mode, realname))
 
-    def join_channel(self, channel):
-        self.write_line('JOIN {}'.format(channel))
+    def join_channel(self, channel, password=None):
+        if password is None or len(password) == 0:
+            self.write_line('JOIN {}'.format(channel))
+        else:
+            self.write_line('JOIN {} {}'.format(channel, password))
 
     def part_channel(self, channel):
         self.write_line('PART {}'.format(channel))
@@ -48,7 +51,6 @@ class IrcSocket(object):
         # TODO check if socket is open?
         # TODO create a queued writer, to throttle output
         # TODO limit line to 510 chars, handle overflow, etc.
-        # self.socket.send(bytes('{}\r\n'.format(line), 'UTF-8'))
         self.socket.send('{}\r\n'.format(line).encode('UTF-8'))
 
     def read_lines(self):
