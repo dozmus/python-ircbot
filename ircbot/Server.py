@@ -62,7 +62,13 @@ def parse(line):
         msg_info = line.split(' ')
         msg_data = ''
 
-    return {'server': msg_info[0], 'command': msg_info[1], 'target': msg_info[2], 'args': msg_info[3:], 'msg': msg_data}
+    return {
+        'server': msg_info[0],
+        'command': msg_info[1],
+        'target': msg_info[2] if len(msg_info) >= 3 else None,
+        'args': msg_info[3:] if len(msg_info) >= 4 else None,
+        'msg': msg_data
+    }
 
 # Application entry-point
 if __name__ == "__main__":
