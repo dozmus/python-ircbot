@@ -51,7 +51,7 @@ class IrcSocket(object):
         # TODO check if socket is open?
         # TODO create a queued writer, to throttle output
         # TODO limit line to 510 chars, handle overflow, etc.
-        self.socket.send('{}\r\n'.format(line).encode('UTF-8'))
+        self.socket.send('{}\r\n'.format(line[:510]).encode('UTF-8'))
 
     def read_lines(self, max_loops=10):
         # Reading buffer
