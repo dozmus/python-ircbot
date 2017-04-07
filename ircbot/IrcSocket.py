@@ -38,19 +38,25 @@ class IrcSocket(object):
         self.write_line('PART {}'.format(channel))
 
     def notice(self, target, message):
+        # TODO handle overflow
         self.write_line('NOTICE {} :{}'.format(target, message))
 
     def privmsg(self, target, message):
+        # TODO handle overflow
         self.write_line('PRIVMSG {} :{}'.format(target, message))
 
     def pong(self, line):
+        """ Replaces the first four characters of the line with 'PONG' and writes it to the socket. """
         self.write_line('PONG {}'.format(line[4:]))
         pass
 
     def write_line(self, line):
+        """ Writes the line to the socket followed by carriage return and new line. It will omit any characters
+        after 510 characters.
+        
+        """
         # TODO check if socket is open?
         # TODO create a queued writer, to throttle output
-        # TODO limit line to 510 chars, handle overflow, etc.
         self.socket.send('{}\r\n'.format(line[:510]).encode('UTF-8'))
 
     def read_lines(self, max_loops=10):
