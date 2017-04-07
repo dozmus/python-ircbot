@@ -53,13 +53,13 @@ class IrcSocket(object):
         # TODO limit line to 510 chars, handle overflow, etc.
         self.socket.send('{}\r\n'.format(line).encode('UTF-8'))
 
-    def read_lines(self):
+    def read_lines(self, max_loops=10):
         # Reading buffer
         lines = []
         self.line_buffer += self.socket.recv(512).decode('UTF-8')
 
         # Looping until we are out of lines to parse
-        while True:  # TODO limit to N per iteration?
+        for i in range(0, max_loops):
             # Finding the line break, if one is missing we stop
             line_break_index = self.line_buffer.find('\r\n')
 
