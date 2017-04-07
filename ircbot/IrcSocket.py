@@ -38,12 +38,16 @@ class IrcSocket(object):
         self.write_line('PART {}'.format(channel))
 
     def notice(self, target, message):
-        # TODO handle overflow
-        self.write_line('NOTICE {} :{}'.format(target, message))
+        messages = [message[i:i + 510] for i in range(0, len(message), 510)]
+
+        for msg in messages:
+            self.write_line('NOTICE {} :{}'.format(target, msg))
 
     def privmsg(self, target, message):
-        # TODO handle overflow
-        self.write_line('PRIVMSG {} :{}'.format(target, message))
+        messages = [message[i:i + 510] for i in range(0, len(message), 510)]
+
+        for msg in messages:
+            self.write_line('PRIVMSG {} :{}'.format(target, msg))
 
     def pong(self, line):
         """ Replaces the first four characters of the line with 'PONG' and writes it to the socket. """
