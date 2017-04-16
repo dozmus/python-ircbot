@@ -6,7 +6,7 @@ from threading import Thread
 from ircbot.IrcSocket import IrcSocket
 
 
-class Server(object):
+class IrcClient(object):
     def __init__(self, server_details, user, channels):
         self.thread = Thread(target=self.run)
         self.server_details = server_details
@@ -116,5 +116,5 @@ if __name__ == "__main__":
     server_details = {'hostname': 'irc.rizon.net', 'port': 6697, 'ssl': True}
     channels = {'#dictated.java': ''}
 
-    server = Server(server_details, user, channels)
-    server.start()
+    client = IrcClient(server_details, user, channels)
+    client.start()
